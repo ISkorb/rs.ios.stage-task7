@@ -21,6 +21,11 @@
 @property (strong, nonatomic) UIButton *secureTwoBtn;
 @property (strong, nonatomic) UIButton *secureThreeBtn;
 
+@property (strong, nonatomic) UIColor *littleBoyBlue;
+@property (strong, nonatomic) UIColor *turquoiseGreen;
+@property (strong, nonatomic) UIColor *blackCoral;
+@property (strong, nonatomic) UIColor *venetianRed;
+
 @end
 
 @implementation ViewController
@@ -30,10 +35,10 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIColor *littleBoyBlue = [UIColor colorWithRed: 0.50 green: 0.64 blue: 0.93 alpha: 1.00];
-    UIColor *turquoiseGreen = [UIColor colorWithRed: 0.57 green: 0.78 blue: 0.69 alpha: 1.00];
-    UIColor *blackCoral = [UIColor colorWithRed: 0.30 green: 0.36 blue: 0.41 alpha: 1.00];
-    UIColor *venetianRed = [UIColor colorWithRed: 0.76 green: 0.00 blue: 0.08 alpha: 1.00];
+    self.littleBoyBlue = [UIColor colorWithRed: 0.50 green: 0.64 blue: 0.93 alpha: 1.00];
+    self.turquoiseGreen = [UIColor colorWithRed: 0.57 green: 0.78 blue: 0.69 alpha: 1.00];
+    self.blackCoral = [UIColor colorWithRed: 0.30 green: 0.36 blue: 0.41 alpha: 1.00];
+    self.venetianRed = [UIColor colorWithRed: 0.76 green: 0.00 blue: 0.08 alpha: 1.00];
     
     // init logo lbl
     self.logoLbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -47,7 +52,7 @@
     self.usernameTxt = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
     self.usernameTxt.layer.cornerRadius = 5;
     self.usernameTxt.layer.borderWidth = 2;
-    self.usernameTxt.layer.borderColor = blackCoral.CGColor;
+    self.usernameTxt.layer.borderColor = self.blackCoral.CGColor;
     self.usernameTxt.placeholder = @"login";
     
     self.spaceUserLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -63,7 +68,7 @@
     self.passwordTxt = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
     self.passwordTxt.layer.cornerRadius = 5;
     self.passwordTxt.layer.borderWidth = 2;
-    self.passwordTxt.layer.borderColor = blackCoral.CGColor;
+    self.passwordTxt.layer.borderColor = self.blackCoral.CGColor;
     self.passwordTxt.placeholder = @"password";
     self.passwordTxt.secureTextEntry = YES;
     
@@ -79,23 +84,26 @@
     // init authorize button
     self.authorizeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.authorizeBtn setTitle:@"Authorize" forState:UIControlStateNormal];
-    [self.authorizeBtn setTitleColor:littleBoyBlue forState:UIControlStateNormal];
+    [self.authorizeBtn setTitleColor:self.littleBoyBlue forState:UIControlStateNormal];
     [self.authorizeBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     self.authorizeBtn.layer.cornerRadius = 5;
-    self.authorizeBtn.layer.borderColor = littleBoyBlue.CGColor;
+    self.authorizeBtn.layer.borderColor = self.littleBoyBlue.CGColor;
     self.authorizeBtn.layer.borderWidth = 2;
+    
+    [self.authorizeBtn addTarget:self action:@selector(authorize:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:self.authorizeBtn];
     
     // init secure view
     self.secureView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
     self.secureView.layer.cornerRadius = 10;
-    self.secureView.layer.borderColor = UIColor.purpleColor.CGColor;
+    self.secureView.layer.borderColor = UIColor.whiteColor.CGColor;
     self.secureView.layer.borderWidth = 2;
     [self.view addSubview:self.secureView];
     
     // init secure lbl
     self.secureLbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
-    self.secureLbl.text = @"1 2 3";
+    self.secureLbl.text = @"-";
     self.secureLbl.textColor = [UIColor blackColor];
     self.secureLbl.textAlignment = NSTextAlignmentCenter;
     [self.secureView addSubview:self.secureLbl];
@@ -103,32 +111,34 @@
     // init secure one button
     self.secureOneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.secureOneBtn setTitle:@"1" forState:UIControlStateNormal];
-    [self.secureOneBtn setTitleColor:littleBoyBlue forState:UIControlStateNormal];
+    [self.secureOneBtn setTitleColor:self.littleBoyBlue forState:UIControlStateNormal];
     [self.secureOneBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     self.secureOneBtn.layer.cornerRadius = 25;
-    self.secureOneBtn.layer.borderColor = littleBoyBlue.CGColor;
+    self.secureOneBtn.layer.borderColor = self.littleBoyBlue.CGColor;
     self.secureOneBtn.layer.borderWidth = 1.5;
     [self.secureView addSubview:self.secureOneBtn];
     
     // init secure two button
     self.secureTwoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.secureTwoBtn setTitle:@"2" forState:UIControlStateNormal];
-    [self.secureTwoBtn setTitleColor:littleBoyBlue forState:UIControlStateNormal];
+    [self.secureTwoBtn setTitleColor:self.littleBoyBlue forState:UIControlStateNormal];
     [self.secureTwoBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     self.secureTwoBtn.layer.cornerRadius = 25;
-    self.secureTwoBtn.layer.borderColor = littleBoyBlue.CGColor;
+    self.secureTwoBtn.layer.borderColor = self.littleBoyBlue.CGColor;
     self.secureTwoBtn.layer.borderWidth = 1.5;
     [self.secureView addSubview:self.secureTwoBtn];
     
     // init secure three button
     self.secureThreeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.secureThreeBtn setTitle:@"3" forState:UIControlStateNormal];
-    [self.secureThreeBtn setTitleColor:littleBoyBlue forState:UIControlStateNormal];
+    [self.secureThreeBtn setTitleColor:self.littleBoyBlue forState:UIControlStateNormal];
     [self.secureThreeBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     self.secureThreeBtn.layer.cornerRadius = 25;
-    self.secureThreeBtn.layer.borderColor = littleBoyBlue.CGColor;
+    self.secureThreeBtn.layer.borderColor = self.littleBoyBlue.CGColor;
     self.secureThreeBtn.layer.borderWidth = 1.5;
     [self.secureView addSubview:self.secureThreeBtn];
+
+    [self.secureView setHidden:YES];
     
 }
 
@@ -195,6 +205,35 @@
     [self.secureOneBtn.topAnchor constraintEqualToAnchor:self.secureTwoBtn.topAnchor].active = YES;
     [self.secureOneBtn.heightAnchor constraintEqualToConstant:50].active = YES;
     [self.secureOneBtn.widthAnchor constraintEqualToConstant:50].active = YES;
+}
+
+- (void) authorize:(UIButton *) sender {
+    NSString *login = @"username";
+    NSString *pass = @"password";
+    if(![self.usernameTxt.text  isEqual: login]){
+        self.usernameTxt.layer.borderColor = self.venetianRed.CGColor;
+    }
+    else{
+        self.usernameTxt.layer.borderColor = self.blackCoral.CGColor;
+    }
+    
+    if(![self.passwordTxt.text  isEqual: pass]){
+        self.passwordTxt.layer.borderColor = self.venetianRed.CGColor;
+    }
+    else{
+        self.passwordTxt.layer.borderColor = self.blackCoral.CGColor;
+    }
+    
+    if([self.usernameTxt.text  isEqual: login] && [self.passwordTxt.text  isEqual: pass]){
+        [self.view endEditing:YES];
+        [self.secureView setHidden:NO];
+        [self.authorizeBtn setUserInteractionEnabled:NO];
+        [self.authorizeBtn setAlpha:0.25];
+        [self.usernameTxt setUserInteractionEnabled:NO];
+        [self.usernameTxt setAlpha:0.25];
+        [self.passwordTxt setUserInteractionEnabled:NO];
+        [self.passwordTxt setAlpha:0.25];
+    }
 }
 
 
