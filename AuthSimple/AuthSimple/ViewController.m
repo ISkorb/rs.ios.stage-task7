@@ -26,6 +26,8 @@
 @property (strong, nonatomic) UIColor *blackCoral;
 @property (strong, nonatomic) UIColor *venetianRed;
 
+@property NSString *securePhrase;
+
 @end
 
 @implementation ViewController
@@ -34,6 +36,8 @@
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.securePhrase = @"";
     
     self.littleBoyBlue = [UIColor colorWithRed: 0.50 green: 0.64 blue: 0.93 alpha: 1.00];
     self.turquoiseGreen = [UIColor colorWithRed: 0.57 green: 0.78 blue: 0.69 alpha: 1.00];
@@ -116,6 +120,9 @@
     self.secureOneBtn.layer.cornerRadius = 25;
     self.secureOneBtn.layer.borderColor = self.littleBoyBlue.CGColor;
     self.secureOneBtn.layer.borderWidth = 1.5;
+    
+    [self.secureOneBtn addTarget:self action:@selector(secureClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.secureView addSubview:self.secureOneBtn];
     
     // init secure two button
@@ -126,6 +133,9 @@
     self.secureTwoBtn.layer.cornerRadius = 25;
     self.secureTwoBtn.layer.borderColor = self.littleBoyBlue.CGColor;
     self.secureTwoBtn.layer.borderWidth = 1.5;
+    
+    [self.secureTwoBtn addTarget:self action:@selector(secureClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.secureView addSubview:self.secureTwoBtn];
     
     // init secure three button
@@ -136,6 +146,9 @@
     self.secureThreeBtn.layer.cornerRadius = 25;
     self.secureThreeBtn.layer.borderColor = self.littleBoyBlue.CGColor;
     self.secureThreeBtn.layer.borderWidth = 1.5;
+    
+    [self.secureThreeBtn addTarget:self action:@selector(secureClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.secureView addSubview:self.secureThreeBtn];
 
     [self.secureView setHidden:YES];
@@ -236,5 +249,50 @@
     }
 }
 
+- (void) secureClick:(UIButton *) sender {
+    NSString *selectedValue = sender.titleLabel.text;
+    NSString* result = [self.securePhrase stringByAppendingString:selectedValue];
+    
+    self.securePhrase = result;
+    self.secureLbl.text = result;
+    
+    if(self.securePhrase.length == 3){
+        if([self.securePhrase  isEqual: @"132"]){
+            self.secureView.layer.borderColor = self.turquoiseGreen.CGColor;
+            
+            //alert here
+            [self displayAlert];
+        }
+        else{
+            self.secureLbl.text = @"-";
+            self.securePhrase = @"";
+            self.secureView.layer.borderColor = self.venetianRed.CGColor;
+        }
+    }
+}
+
+- (void)displayAlert
+{
+     UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:@"Welcome"
+                                 message:@"You are successfully authorised!"
+                                 preferredStyle:UIAlertControllerStyleAlert];
+
+    //Add Buttons
+
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:@"Refresh"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+                                    [self refresh];
+                                }];
+    [alert addAction:yesButton];
+
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)refresh
+{
+}
 
 @end
