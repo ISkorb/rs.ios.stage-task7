@@ -23,8 +23,9 @@
     UIWindowScene * windowScene = (UIWindowScene*) scene;
       _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
       ViewController* initialViewController = [[ViewController alloc] init];
-      UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:initialViewController];
-      _window.rootViewController = navController;
+      //UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:initialViewController];
+      //_window.rootViewController = navController;
+      _window.rootViewController = initialViewController;
       [_window makeKeyAndVisible];
       _window.windowScene = windowScene;
 }
